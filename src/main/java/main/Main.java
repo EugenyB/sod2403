@@ -1,5 +1,6 @@
 package main;
 
+import tree.AVLTree;
 import tree.Tree;
 
 public class Main {
@@ -10,6 +11,7 @@ public class Main {
 
     private void run() {
         var tree = new Tree<Integer>();
+//        var tree = new AVLTree();
         tree.add(10);
         tree.add(2);
         tree.add(13);
@@ -24,13 +26,17 @@ public class Main {
 
         tree.traverse();
 
-        if (tree.contains(10)) {
-            System.out.println("Yes");
-        }
-        if (tree.contains(12)) {
+        if (tree.contains(8)) {
             System.out.println("Yes");
         } else {
             System.out.println("No");
         }
+
+        tree.remove(8);
+        tree.traverse();
+        tree.remove(11);
+        tree.traverse();
+        tree.remove(12);
+        tree.traverse();
     }
 }

@@ -75,23 +75,43 @@ public class Tree <T extends Comparable<T>> {
         }
     }
 
-//    public void remove(T value) {
-//        remove(value, root);
-//    }
-//
-//    private Node<T> remove(T value, Node<T> root) {
-//        if (root == null) return root;
-//        if (value.equals(root.getKey())) {
-//            if (root.isLeaf()) {
-//                root = null;
-//            } else if (root.getLeft() != null) {
-//
-//            }
-//        } else if (value.compareTo(root.getKey()) < 0) {
-//            root.setLeft(remove(value, root.getLeft()));
-//        } else {
-//            root.setRight(remove(value, root.getRight()));
-//        }
-//        return root;
-//    }
+    public void remove(T value) {
+        remove(value, root);
+    }
+
+    private Node<T> remove(T value, Node<T> root) {
+        if (root == null) return root;
+        if (value.equals(root.getKey())) {
+            if (root.isLeaf()) {
+                root = null;
+            } else if (root.getLeft() != null) {
+                root.setKey(predecessor(root));
+                root.setLeft(remove(root.getKey(), root.getLeft()));
+            } else {
+                root.setKey(successor(root));
+                root.setRight(remove(root.getKey(), root.getRight()));
+            }
+        } else if (value.compareTo(root.getKey()) < 0) {
+            root.setLeft(remove(value, root.getLeft()));
+        } else {
+            root.setRight(remove(value, root.getRight()));
+        }
+        return root;
+    }
+
+    private T successor(Node<T> root) {
+        root = root.getRight();
+        while (root.getLeft() != null) {
+            root = root.getLeft();
+        }
+        return root.getKey();
+    }
+
+    private T predecessor(Node<T> root) {
+        root = root.getLeft();
+        while (root.getRight() != null) {
+            root = root.getRight();
+        }
+        return root.getKey();
+    }
 }
